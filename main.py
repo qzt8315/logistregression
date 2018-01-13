@@ -1,12 +1,20 @@
 # 导入库
 import numpy as np
+import math
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
 
 # 计算拟合参数的迭代次数
-maxCycle = 1000
+maxCycle = 2000
+# 计算步长
+alpha = 0.001
 
 def sigmoid(z):
-    return 1./(1 + np.exp(-z))
+    ret = []
+    for i in z:
+        t = 1./(1 + math.exp(-i))
+        ret.append(t)
+    return np.matrix(ret)
 
 # 程序开始
 if __name__ == "__main__":
@@ -35,7 +43,20 @@ if __name__ == "__main__":
     # 测试sigmoid函数
     # print(sigmoid(-100))
     # 划分测试集以及训练集
-    testdata = data[0::2, 1:3]
-    testLabel = data[0::2, 3]
-    traindata = data[1::2, 1:3]
-    trainLabel = data[1::2, 3]
+    testdata = data[0::2, 1:3]  # size:9*2
+    testLabel = data[0::2, 3]  # size:9*1
+    traindata = data[1::2, 1:3] # size:8*2
+    trainLabel = data[1::2, 3]  # size:8*1
+    # 迭代计算拟合参数
+    weight = np.mat(np.ones(shape=(2,1)))
+    dataMat = np.mat(traindata)
+    labelMat = np.mat(trainLabel).T
+    # 梯度下降求解
+    for i in range(maxCycle):
+        t = np.dot(dataMat, weight)
+        h = sigmoid(t)
+        err = labelMat - h.T  # size:8*1
+        a = alpha * np.dot(dataMat.T, err)
+        weight = weight + a
+    # 显示计算结果
+    print(weight)
