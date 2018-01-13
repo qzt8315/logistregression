@@ -2,6 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 计算拟合参数的迭代次数
+maxCycle = 1000
+
 def sigmoid(z):
     return 1./(1 + np.exp(-z))
 
@@ -30,4 +33,9 @@ if __name__ == "__main__":
     # plt.legend(loc='upper right')
     # plt.show()
     # 测试sigmoid函数
-    print(sigmoid(-100))
+    # print(sigmoid(-100))
+    # 划分测试集以及训练集
+    testdata = data[0::2, 1:3]
+    testLabel = data[0::2, 3]
+    traindata = data[1::2, 1:3]
+    trainLabel = data[1::2, 3]
