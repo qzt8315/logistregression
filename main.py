@@ -5,10 +5,11 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 
 # 计算拟合参数的迭代次数
-maxCycle = 2000
+maxCycle = 500
 # 计算步长
-alpha = 0.001
+alpha = 0.07
 
+# logistic函数
 def sigmoid(z):
     ret = []
     for i in z:
@@ -59,4 +60,7 @@ if __name__ == "__main__":
         a = alpha * np.dot(dataMat.T, err)
         weight = weight + a
     # 显示计算结果
-    print(weight)
+    # print(weight)
+    aa = (-weight.T * np.mat(testdata).T).tolist()
+    print(sigmoid(aa[0]))
+    print(testLabel)
